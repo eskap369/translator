@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .output {
+            background: #f7f7f7;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Custom Translator</h1>
+        <textarea id="inputText" placeholder="Enter English text or your language text here..."></textarea>
+        <button id="translateButton">Translate to My Language</button>
+        <button id="reverseTranslateButton">Translate Back to English</button>
+        <div class="output" id="outputText">Your translation will appear here...</div>
+    </div>
+
+    <script>
+        // Add event listeners for both buttons
+        document.getElementById('translateButton').addEventListener('click', translate);
+        document.getElementById('reverseTranslateButton').addEventListener('click', reverseTranslate);
+
+        // Custom language translation rules
+        const vowels = ['A', 'E', 'I', 'O', 'U'];
+        const consonants = [
+            'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'
+        ];
+
+        function translate() {
+            let input = document.getElementById('inputText').value.toUpperCase();
+            let output = '';
+
+            for (let i = 0; i < input.length; i++) {
+                let char = input[i];
+
+                if (vowels.includes(char)) {
+                    let index = vowels.indexOf(char);
+                    output += vowels[(index + 1) % vowels.length];
+                } else if (consonants.includes(char)) {
+                    let index = consonants.indexOf(char);
+                    output += consonants[(index + 1) % consonants.length];
+                } else {
+                    output += char;
+                }
+            }
+
+            document.getElementById('outputText').innerText = output;
+        }
+
+        function reverseTranslate() {
+            let input = document.getElementById('inputText').value.toUpperCase();
+            let output = '';
+
+            for (let i = 0; i < input.length; i++) {
+                let char = input[i];
+
+                if (vowels.includes(char)) {
+                    let index = vowels.indexOf(char);
+                    output += vowels[(index - 1 + vowels.length) % vowels.length]; // Get the previous vowel
+                } else if (consonants.includes(char)) {
+                    let index = consonants.indexOf(char);
+                    output += consonants[(index - 1 + consonants.length) % consonants.length]; // Get the previous consonant
+                } else {
+                    output += char;
+                }
+            }
+
+            document.getElementById('outputText').innerText = output;
+        }
+    </script>
+</body>
+</html>
